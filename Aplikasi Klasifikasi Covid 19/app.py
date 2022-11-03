@@ -27,14 +27,14 @@ def index():
 @app.route('/predict', methods=['POST'])
 def predict():
     chosen_model = request.form['select_model']
-    model_dict = {'CNN'   :   'static/MLModule/Model2data.h5',
-                  'Transferlearning'     :   'static/MLModule/modelTF99.h5',}
+    model_dict = {'CNN'   :   'D:\Kuliah Faldoae\Semester-7\pembelajaran-mesin\TUBES MESIN LEARNING FIX\Aplikasi Klasifikasi Covid 19\Model2data.h5',
+                  'Transferlearning'     :   'D:\Kuliah Faldoae\Semester-7\pembelajaran-mesin\TUBES MESIN LEARNING FIX\Aplikasi Klasifikasi Covid 19\modelTF99.h5',}
     if chosen_model in model_dict:
         model = load_model(model_dict[chosen_model]) 
     else:
         model = load_model(model_dict[0])
     file = request.files["file"]
-    file.save(os.path.join('static', 'temp.jpg'))
+    file.save(os.path.join('D:\Kuliah Faldoae\Semester-7\pembelajaran-mesin\TUBES MESIN LEARNING FIX\Aplikasi Klasifikasi Covid 19\static', 'temp.jpg'))
     img = cv2.cvtColor(np.array(Image.open(file)), cv2.COLOR_BGR2RGB)
     img = np.expand_dims(cv2.resize(img, model.layers[0].input_shape[0][1:3] if not model.layers[0].input_shape[1:3] else model.layers[0].input_shape[1:3]).astype('float32') / 255, axis=0)
     start = time.time()
