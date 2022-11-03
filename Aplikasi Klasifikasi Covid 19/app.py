@@ -4,8 +4,9 @@ import cv2
 import numpy as np
 from PIL import Image
 from flask import Flask, request, redirect, render_template
-from tensorflow.keras.models import load_model
-from tensorflow.keras.models import model_from_json
+from tensorflow import keras
+#from tensorflow.keras.models import load_model
+#from tensorflow.keras.models import model_from_json
 
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 app = Flask(__name__)
@@ -30,9 +31,9 @@ def predict():
     model_dict = {'CNN'   :   'D:\Kuliah Faldoae\Semester-7\pembelajaran-mesin\TUBES MESIN LEARNING FIX\Aplikasi Klasifikasi Covid 19\Model2data.h5',
                   'Transferlearning'     :   'D:\Kuliah Faldoae\Semester-7\pembelajaran-mesin\TUBES MESIN LEARNING FIX\Aplikasi Klasifikasi Covid 19\modelTF99.h5',}
     if chosen_model in model_dict:
-        model = load_model(model_dict[chosen_model]) 
+        model = keras.models.load_model(model_dict[chosen_model]) 
     else:
-        model = load_model(model_dict[0])
+        model = keras.models.load_model(model_dict[0])
     file = request.files["file"]
     file.save(os.path.join('D:\Kuliah Faldoae\Semester-7\pembelajaran-mesin\TUBES MESIN LEARNING FIX\Aplikasi Klasifikasi Covid 19\static', 'temp.jpg'))
     img = cv2.cvtColor(np.array(Image.open(file)), cv2.COLOR_BGR2RGB)
